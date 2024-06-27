@@ -1,0 +1,81 @@
+CREATE TABLE Autor (
+    ID_Autor SERIAL PRIMARY KEY,
+    Nome VARCHAR(45),
+    Nacionalidade VARCHAR(45),
+    Endereço VARCHAR(45)
+);
+
+CREATE TABLE Editora (
+    ID_Editora SERIAL PRIMARY KEY,
+    Nome VARCHAR(45),
+    Endereço VARCHAR(45)
+);
+
+CREATE TABLE Genero (
+    ID_Genero SERIAL PRIMARY KEY,
+    Nome VARCHAR(45)
+);
+
+CREATE TABLE Livro (
+    ID_Livro SERIAL PRIMARY KEY,
+    Título VARCHAR(45),
+    Ano_Publicação INT,
+    ID_Editora INT,
+    ID_Genero INT,
+    Exemplares_Estoque INT,
+    FOREIGN KEY (ID_Editora) REFERENCES Editora(ID_Editora),
+    FOREIGN KEY (ID_Genero) REFERENCES Genero(ID_Genero)
+);
+
+CREATE TABLE Livro_Autor (
+    ID_Livro INT,
+    ID_Autor INT,
+    PRIMARY KEY (ID_Livro, ID_Autor),
+    FOREIGN KEY (ID_Livro) REFERENCES Livro(ID_Livro),
+    FOREIGN KEY (ID_Autor) REFERENCES Autor(ID_Autor)
+);
+
+CREATE TABLE Fornecedor (
+    ID_Fornecedor SERIAL PRIMARY KEY,
+    Nome VARCHAR(45),
+    Endereço VARCHAR(45)
+);
+
+CREATE TABLE Compra (
+    ID_Compra SERIAL PRIMARY KEY,
+    Data_Compra DATE,
+    ID_Fornecedor INT,
+    FOREIGN KEY (ID_Fornecedor) REFERENCES Fornecedor(ID_Fornecedor)
+);
+
+CREATE TABLE Livro_Compra (
+    ID_Compra INT,
+    ID_Livro INT,
+    Quantidade INT,
+    PRIMARY KEY (ID_Compra, ID_Livro),
+    FOREIGN KEY (ID_Compra) REFERENCES Compra(ID_Compra),
+    FOREIGN KEY (ID_Livro) REFERENCES Livro(ID_Livro)
+);
+
+CREATE TABLE Cliente (
+    ID_Cliente SERIAL PRIMARY KEY,
+    Nome VARCHAR(45),
+    Telefone VARCHAR(15),
+    Endereço VARCHAR(45)
+);
+
+CREATE TABLE Venda (
+    ID_Venda SERIAL PRIMARY KEY,
+    Data_Venda DATE,
+    ID_Cliente INT,
+    FOREIGN KEY (ID_Cliente) REFERENCES Cliente(ID_Cliente)
+);
+
+CREATE TABLE Livro_Venda (
+    ID_Venda INT,
+    ID_Livro INT,
+    Quantidade INT,
+    PRIMARY KEY (ID_Venda, ID_Livro),
+    FOREIGN KEY (ID_Venda) REFERENCES Venda(ID_Venda),
+    FOREIGN KEY (ID_Livro) REFERENCES Livro(ID_Livro)
+);
